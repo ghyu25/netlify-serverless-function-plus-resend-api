@@ -1,0 +1,27 @@
+<form id="contactForm">
+  <input type="text" name="name" placeholder="Your Name" required>
+  <input type="email" name="email" placeholder="Your Email" required>
+  <textarea name="message" placeholder="Message"></textarea>
+  <button type="submit">Send</button>
+</form>
+
+<div id="status"></div>
+
+<script>
+document.getElementById("contactForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData);
+
+  const res = await fetch("/.netlify/functions/send-email", {
+    method: "POST",
+    body: JSON.stringify(data)
+  });
+
+  const result = await res.json();
+
+  document.getElementById("status").innerText =
+    result.success ? "Email sent!" : "Error sending email";
+});
+</script>
