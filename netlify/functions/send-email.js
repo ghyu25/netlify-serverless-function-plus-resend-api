@@ -1,6 +1,6 @@
-import { Resend } from 'resend';
+const { Resend } = require("resend");
 
-export async function handler(event, context) {
+exports.handler = async (event, context) => {
   if (event.httpMethod !== "POST") {
     return {
       statusCode: 405,
@@ -34,4 +34,4 @@ export async function handler(event, context) {
       body: JSON.stringify({ error: error.message })
     };
   }
-}
+};
